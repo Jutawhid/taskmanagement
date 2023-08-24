@@ -23,7 +23,9 @@ export default function CardDetails(props) {
 
   const [values, setValues] = useState({ ...props.card });
   const [input, setInput] = useState(false);
+  const [desc, setDesc] = useState(false);
   const [text, setText] = useState(values.title);
+  const [description, setdescription] = useState(values.desc);
   const [labelShow, setLabelShow] = useState(false);
   const Input = (props) => {
     return (
@@ -39,10 +41,22 @@ export default function CardDetails(props) {
       </div>
     );
   };
+  const Textarea = (props) => {
+    return (
+      <textarea
+        placeholder="Description"
+        autoFocus
+        id={"edit-input"}
+        type={"text"}
+        onChange={(e) => setdescription(e.target.value)}
+      />
+    );
+  };
   const addTask = (value) => {
     values.task.push({
       id: uuidv4(),
       task: value,
+      desc: desc,
       completed: false,
     });
     setValues({ ...values });
@@ -67,6 +81,9 @@ export default function CardDetails(props) {
   };
   const updateTitle = (value) => {
     setValues({ ...values, title: value });
+  };
+  const updateDesc = (value) => {
+    setValues({ ...values, desc: value });
   };
 
   const calculatePercent = () => {
@@ -100,6 +117,7 @@ export default function CardDetails(props) {
     if (e.code === "Enter") {
       setInput(false);
       updateTitle(text === "" ? values.title : text);
+      updateDesc(text === "" ? values.description : description);
     } else return;
   };
 
@@ -135,6 +153,19 @@ export default function CardDetails(props) {
                   </h5>
                 )}
               </div>
+              {/* <div className="d-flex align-items-center pt-3 gap-2">
+                <CreditCard className="icon__md" />
+                {desc ? (
+                  <Textarea title={values.description} />
+                ) : (
+                  <h5
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setDesc(true)}
+                  >
+                    {values.description}
+                  </h5>
+                )}
+              </div> */}
             </div>
           </div>
           <div className="row">

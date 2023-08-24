@@ -93,7 +93,6 @@ export default function Board(props) {
         <Editable
           name={"Add Card"}
           btnName={"Add Card"}
-          placeholder={"Enter Card Title"}
           onSubmit={(value) => props.addCard(value, props.id)}
         />
       </div>

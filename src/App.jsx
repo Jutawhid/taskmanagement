@@ -9,12 +9,12 @@ import Editable from "../components/Editable/Editable";
 import useLocalStorage from "use-local-storage";
 import "../bootstrap.css";
 function App() {
-  // const [data, setData] = useState(
-  //   localStorage.getItem("kanban-board")
-  //     ? JSON.parse(localStorage.getItem("kanban-board"))
-  //     : []
-  // );
-  const [data, setData] = useState(initdata);
+  const [data, setData] = useState(
+    localStorage.getItem("kanban-board")
+      ? JSON.parse(localStorage.getItem("kanban-board"))
+      : []
+  );
+  // const [data, setData] = useState(initdata);
 
   const defaultDark = window.matchMedia(
     "(prefers-colors-scheme: dark)"
@@ -128,7 +128,13 @@ function App() {
   };
 
   useEffect(() => {
-    localStorage.setItem("kanban-board", JSON.stringify(data));
+    const localData = JSON.parse(localStorage.getItem("kanban-board"))
+    console.log('localData',localData);
+    if( localData != null && localData.length <= 0){
+      localStorage.setItem("kanban-board", JSON.stringify(initdata));
+    } else {
+      localStorage.setItem("kanban-board", JSON.stringify(data));
+    }
   }, [data]);
 console.log('data', data);
   return (
